@@ -76,18 +76,12 @@ HRESULT InitThread()
 
 	while (bRunning)
 	{
-			int PlayerIns = (dwBase + 0x012E29E8);
-			DWORD *pPlayer = (DWORD*)(DWORD*)PlayerIns;
-			bool characterLoaded = *pPlayer != NULL;
+		UINT_PTR pCurrentAnimation = Pointer<UINT_PTR>(0x12E29E8, 0x0, 0xFC)();
 
-			if (characterLoaded)
-			{
-				if (GetAsyncKeyState(key) & 1)
-				{
-					UINT_PTR pCurrentAnimation = Pointer<UINT_PTR>(0x012E29E8, 0x0, 0xFC)();
-					*(DWORD*)pCurrentAnimation = 0;
-				}
-			}
+		if (GetAsyncKeyState(key) & 1)
+		{
+			*(DWORD*)pCurrentAnimation = 0;
+		}
 		Sleep(1);
 	}
 	return 0;
